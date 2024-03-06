@@ -1,7 +1,10 @@
 public class App {
-    
+
     public static void main(String[] args) {
-        Carta c = new Carta("A", Carta.Naipe.ESPADAS);
-        System.out.println(c.toString());
+       Baralho baralho = new Baralho();
+       System.out.println(baralho.toString());
+        System.out.println("--------------------------------------");
+        baralho.embaralhamento();
+       System.out.println(baralho.toString());
     }
 }
