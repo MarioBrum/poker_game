@@ -17,9 +17,30 @@ public class Baralho {
     }
     //shuffle
     public void embaralhamento(){
-        for(Carta c : baralho){
-            baralho.remove(c);
-            baralho.add(Math.random(0,50),c);
+        for(int i = 0; i < 51; i++){
+            Carta c = baralho.remove(i);
+            baralho.add((int)(Math.random()*52),c);
+            //random.nextInt(baralho.size());
+        }
+    }
+
+    public void addCarta(Carta c){
+        if(!baralho.contains(c)){
+            baralho.add((int)(Math.random()*52),c);
+        }
+        else{
+            System.out.println("Cartas duplicadas no baralho!!!");
+        }
+    }
+
+    public Carta removeCarta(){
+        if(!(baralho.size() <= 0)){
+            Carta c = baralho.remove((int)(Math.random()*52));
+            return c;
+        }
+        else{
+            System.out.println("Não há cartas no baralho!!!");
+            return null;
         }
     }
 
