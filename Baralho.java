@@ -44,6 +44,42 @@ public class Baralho {
         }
     }
 
+    enum ValorPoker {
+        ROYAL_FLUSH,
+        STRAIGHT_FLUSH, 
+        FOUR_OF_KIND, 
+        FULL_HOUSE,
+        FLUSH,
+        STRAIGHT,
+        THREE_OF_A_KIND,
+        TWO_PAIR,
+        ONE_PAIR,
+        HIGH_CARD
+    }
+
+    public ValorPoker combPoker(Vector<Carta> cartas){
+        //flush config
+        boolean flush = true;
+        Carta.Naipe naipe = null;
+        for(Carta c:cartas){
+            if(naipe == null){
+                naipe = c.naipe;
+            }
+            else if(c.naipe != naipe)
+            {
+                flush = false;
+            }
+        }
+        if(flush){
+            return ValorPoker.FLUSH;
+        }
+        else{
+            return ValorPoker.HIGH_CARD;
+        }
+        //alterar pra straight flush, royal flush ou flush
+
+    }
+
     public String toString() {
         String saida = "Cartas listadas: \n";
         for(Carta carta : baralho){

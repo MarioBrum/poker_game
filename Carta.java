@@ -17,8 +17,8 @@ public class Carta {
         return this.numero;
     }
 
-    public String getNaipe() {
-        return this.naipe.name();
+    public Naipe getNaipe() {
+        return this.naipe;
     }
 
     public String toString() {
