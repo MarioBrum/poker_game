@@ -1,5 +1,5 @@
 public class Carta {
-    String numero;
+    int numero;
     enum Naipe {
         ESPADAS,
         COPAS,  // coracao
@@ -8,12 +8,30 @@ public class Carta {
     }
     Naipe naipe;
     
-    public Carta(String nro, Naipe n) {
+    public Carta(int nro, Naipe n) {
         numero = nro;
         naipe = n;
     }
 
     public String getNumero() {
+        if(this.numero == 1){
+            return "A";
+        }
+        else if(this.numero == 11){
+            return "J";
+        }
+        else if(this.numero == 12){
+            return "Q";
+        }
+        else if(this.numero == 13){
+            return "K";
+        }
+        else{
+            return String.valueOf(this.numero);
+        }
+    }
+
+    public int getNumeroInt() {
         return this.numero;
     }
 
@@ -22,6 +40,6 @@ public class Carta {
     }
 
     public String toString() {
-        return "Carta: " + this.numero + " de " + this.naipe.name() + " \n ";
+        return "Carta: " + this.getNumero() + " de " + this.naipe.name() + " \n ";
     }
 }

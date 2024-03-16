@@ -6,8 +6,8 @@ public class Baralho {
     
     public Baralho() {
         Vector<Carta> inicializacaoBaralho = new Vector<Carta>();
-        Vector<String> simbolos = new Vector<String>(Arrays.asList("A","2","3","4","5","6","7","8","9","10","J","Q","K"));
-        for(String s : simbolos){
+        Vector<Integer> simbolos = new Vector<Integer>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13));
+        for(Integer s : simbolos){
             inicializacaoBaralho.add(new Carta(s,Carta.Naipe.ESPADAS));
             inicializacaoBaralho.add(new Carta(s,Carta.Naipe.COPAS));
             inicializacaoBaralho.add(new Carta(s,Carta.Naipe.BASTOS));
@@ -58,6 +58,65 @@ public class Baralho {
     }
 
     public ValorPoker combPoker(Vector<Carta> cartas){
+        //straigh, royal ou flush
+        if(false){
+            return ValorPoker.ROYAL_FLUSH;
+        }
+        else if(possuiFlush(cartas) && possuiSeq(cartas)){
+            return ValorPoker.STRAIGHT_FLUSH;
+        }
+        else if(possuiFlush(cartas)){
+            return ValorPoker.FLUSH;
+        else if(possuiSeq(cartas)){
+            return ValorPoker.STRAIGHT;
+        }
+        return ValorPoker.HIGH_CARD;
+        //alterar pra straight flush, royal flush ou flush
+
+    }
+
+    //ARRUMAR SEQUENCIA
+    public boolean possuiSeq(Vector<Carta> cartas){
+        Vector<Integer> vet = new Vector<Integer>();
+        for(Carta c: cartas){
+            vet.add(c.getNumeroInt());
+            System.out.println(c.getNumeroInt());
+        }
+        //vet.sort(null); // FAZER SORT
+        vet = sort(vet);
+        int cont = 0;
+        int inicio = vet.get(0);
+        boolean seq = true;
+        for(int i = 0; i < vet.size()-1; i++){
+            if (!(vet.get(i) + 1== vet.get(i+1))){
+                seq = false;
+                break;
+            }
+        }
+        
+        return seq;
+    }
+
+    //sort funcionando
+    public Vector<Integer> sort(Vector<Integer> vet){
+        Vector<Integer> retorno = new Vector<Integer>();
+        int tam = vet.size();
+        for(int i = 0; i < tam; i++){
+            Integer menorValor = vet.get(0);
+            for(int j = 0; j < vet.size(); j++){
+                if(vet.get(j) < menorValor){
+                    menorValor = vet.get(j);
+                }
+            }
+            retorno.add(menorValor);
+            System.out.println("sort" + menorValor);
+            vet.remove(menorValor);    
+        }
+        return retorno;
+
+    }
+
+    public boolean possuiFlush(Vector<Carta> cartas){
         //flush config
         boolean flush = true;
         Carta.Naipe naipe = null;
@@ -70,14 +129,7 @@ public class Baralho {
                 flush = false;
             }
         }
-        if(flush){
-            return ValorPoker.FLUSH;
-        }
-        else{
-            return ValorPoker.HIGH_CARD;
-        }
-        //alterar pra straight flush, royal flush ou flush
-
+        return flush;
     }
 
     public String toString() {
