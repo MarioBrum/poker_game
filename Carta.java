@@ -40,6 +40,6 @@ public class Carta {
     }
 
     public String toString() {
-        return "Carta: " + this.getNumero() + " de " + this.naipe.name() + " \n ";
+        return "Carta: " + this.getNumero() + " de " + this.naipe.name() + " \n";
     }
 }

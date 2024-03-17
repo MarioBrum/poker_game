@@ -70,6 +70,18 @@ public class Baralho {
         else if(possuiFlush(cartas)){
             return ValorPoker.FLUSH;
         }
+        else if(possuiQuadra(cartas)){
+            return ValorPoker.FLUSH;
+        }
+        else if(possuiTrinca(cartas)){
+            return ValorPoker.FLUSH;
+        }
+        else if(possuiPar(cartas) == 2){
+            return ValorPoker.TWO_PAIR;
+        }
+        else if(possuiPar(cartas) == 1){
+            return ValorPoker.ONE_PAIR;
+        }
         else if(possuiSeq(cartas)){
             return ValorPoker.STRAIGHT;
         }else{
@@ -79,16 +91,9 @@ public class Baralho {
 
     }
 
-    //ARRUMAR SEQUENCIA
     public boolean possuiSeq(Vector<Carta> cartas){
         Vector<Integer> vet = new Vector<Integer>();
-        for(Carta c: cartas){
-            vet.add(c.getNumeroInt());
-            //breakpoint
-            //System.out.println(c.getNumeroInt());
-        }
-        //vet.sort(null); // FAZER SORT
-        vet = sort(vet);
+        vet = sort(vecCartaToVecInt(cartas));
         int cont = 0;
         int inicio = vet.get(0);
         boolean seq = true;
@@ -120,6 +125,69 @@ public class Baralho {
         }
         return retorno;
 
+    }
+
+    public Vector<Integer> vecCartaToVecInt(Vector<Carta> cartas){
+        Vector<Integer> vet = new Vector<Integer>();
+        for(Carta c: cartas){
+            vet.add(c.getNumeroInt());
+        }
+        return vet;
+    }
+
+    public int possuiPar(Vector<Carta> cartas){
+        Vector<Integer> vet = new Vector<Integer>();
+        vet = sort(vecCartaToVecInt(cartas));
+        int contaPar = 0;
+        int i = 0;
+        while(i < vet.size()){
+            int valor = vet.get(i);
+            for(int j = i+1; j < vet.size();j++){
+                if(valor == vet.get(j)){
+                    contaPar++;
+                    i++;
+                    break;
+                }
+            }
+            i++;
+        }
+
+        return contaPar;
+    }
+    //ARRUMAR TRINCA
+    public boolean possuiTrinca(Vector<Carta> cartas){
+        Vector<Integer> vet = new Vector<Integer>();
+        vet = sort(vecCartaToVecInt(cartas));
+        boolean contaPar = false;
+        int i = 0;
+        while(i < vet.size()){
+            int valor = vet.get(i);
+            for(int j = i+1; j < vet.size();j++){
+                if(valor == vet.get(j) && valor == vet.get(j+1)){
+                    return true;
+                }
+            }
+
+        }
+        return false;
+    }
+
+    //ARRUMAR QUADRA
+    public boolean possuiQuadra(Vector<Carta> cartas){
+        Vector<Integer> vet = new Vector<Integer>();
+        vet = sort(vecCartaToVecInt(cartas));
+        boolean contaPar = false;
+        int i = 0;
+        while(i < vet.size()){
+            int valor = vet.get(i);
+            for(int j = i+1; j < vet.size();j++){
+                if(valor == vet.get(j) && valor == vet.get(j+1) && valor == vet.get(j+2)){
+                    return true;
+                }
+            }
+
+        }
+        return false;
     }
 
     public boolean possuiFlush(Vector<Carta> cartas){
