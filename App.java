@@ -4,49 +4,22 @@ public class App {
      //jframe?
     public static void main(String[] args) {
         Baralho baralho = new Baralho();
-        //System.out.println(baralho.toString());
-        System.out.println("--------------------------------------");
-        Vector<Carta> flush = new Vector<Carta>();
-        flush.add(new Carta(1,Carta.Naipe.ESPADAS));
-        flush.add(new Carta(2,Carta.Naipe.ESPADAS));
-        flush.add(new Carta(3,Carta.Naipe.ESPADAS));
-        flush.add(new Carta(4,Carta.Naipe.ESPADAS));
-        flush.add(new Carta(7,Carta.Naipe.ESPADAS));
+        baralho.embaralhamento();
+        Vector<Carta> mão = new Vector<Carta>();
+        boolean loop = true;
+        while(loop){
+            System.out.println("Sua mão é: ");
+            mão.add(baralho.removeCarta());
+            mão.add(baralho.removeCarta());
+            mão.add(baralho.removeCarta());
+            mão.add(baralho.removeCarta());
+            mão.add(baralho.removeCarta());
+            for(Carta c:mão){
+                System.out.println(c.toString());
+            }
 
-        Vector<Carta> notFlush = new Vector<Carta>();
-        notFlush.add(new Carta(1,Carta.Naipe.COPAS));
-        notFlush.add(new Carta(2,Carta.Naipe.ESPADAS));
-        notFlush.add(new Carta(4,Carta.Naipe.ESPADAS));
-        notFlush.add(new Carta(5,Carta.Naipe.ESPADAS));
-        notFlush.add(new Carta(7,Carta.Naipe.ESPADAS));
-
-        Vector<Carta> notFlush2 = new Vector<Carta>();
-        notFlush2.add(new Carta(1,Carta.Naipe.COPAS));
-        notFlush2.add(new Carta(2,Carta.Naipe.ESPADAS));
-        notFlush2.add(new Carta(4,Carta.Naipe.ESPADAS));
-        notFlush2.add(new Carta(5,Carta.Naipe.ESPADAS));
-        notFlush2.add(new Carta(7,Carta.Naipe.BASTOS));
-
-        Vector<Carta> flush2 = new Vector<Carta>();
-        flush2.add(new Carta(6,Carta.Naipe.BASTOS));
-        flush2.add(new Carta(2,Carta.Naipe.BASTOS));
-        flush2.add(new Carta(9,Carta.Naipe.BASTOS));
-        flush2.add(new Carta(4,Carta.Naipe.BASTOS));
-        flush2.add(new Carta(5,Carta.Naipe.BASTOS));
-
-        Vector<Carta> seq1 = new Vector<Carta>();
-        seq1.add(new Carta(3,Carta.Naipe.BASTOS));
-        seq1.add(new Carta(2,Carta.Naipe.BASTOS));
-        seq1.add(new Carta(1,Carta.Naipe.BASTOS));
-        seq1.add(new Carta(4,Carta.Naipe.BASTOS));
-        seq1.add(new Carta(5,Carta.Naipe.BASTOS));
-
-
-        //System.out.println(baralho.combPoker(flush2));
-        //System.out.println(baralho.combPoker(flush));
-        System.out.println(baralho.possuiSeq(flush2));
-        //System.out.println(baralho.combPoker(notFlush));
-        //System.out.println(baralho.combPoker(flush2));
-        //System.out.println(baralho.combPoker(notFlush2));
+            System.out.println("Sua combinação é : " + baralho.combPoker(mão).toString());
+            loop = false;
+        }
     }
 }

@@ -1,11 +1,13 @@
 import java.util.Vector;
 import java.util.Arrays;
-//import java.util.random;
+import java.util.Random;
 public class Baralho {
     Vector<Carta> baralho;
+    private Random random;
     
     public Baralho() {
         Vector<Carta> inicializacaoBaralho = new Vector<Carta>();
+        this.random = new Random();
         Vector<Integer> simbolos = new Vector<Integer>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13));
         for(Integer s : simbolos){
             inicializacaoBaralho.add(new Carta(s,Carta.Naipe.ESPADAS));
@@ -19,14 +21,14 @@ public class Baralho {
     public void embaralhamento(){
         for(int i = 0; i < 51; i++){
             Carta c = baralho.remove(i);
-            baralho.add((int)(Math.random()*52),c);
+            baralho.add(random.nextInt(baralho.size()),c);
             //random.nextInt(baralho.size());
         }
     }
 
     public void addCarta(Carta c){
         if(!baralho.contains(c)){
-            baralho.add((int)(Math.random()*52),c);
+            baralho.add(random.nextInt(baralho.size()-1),c);
         }
         else{
             System.out.println("Cartas duplicadas no baralho!!!");
@@ -35,7 +37,7 @@ public class Baralho {
 
     public Carta removeCarta(){
         if(!(baralho.size() <= 0)){
-            Carta c = baralho.remove((int)(Math.random()*52));
+            Carta c = baralho.remove(random.nextInt(baralho.size()-1));
             return c;
         }
         else{
@@ -67,10 +69,12 @@ public class Baralho {
         }
         else if(possuiFlush(cartas)){
             return ValorPoker.FLUSH;
+        }
         else if(possuiSeq(cartas)){
             return ValorPoker.STRAIGHT;
+        }else{
+            return ValorPoker.HIGH_CARD;
         }
-        return ValorPoker.HIGH_CARD;
         //alterar pra straight flush, royal flush ou flush
 
     }
@@ -80,7 +84,8 @@ public class Baralho {
         Vector<Integer> vet = new Vector<Integer>();
         for(Carta c: cartas){
             vet.add(c.getNumeroInt());
-            System.out.println(c.getNumeroInt());
+            //breakpoint
+            //System.out.println(c.getNumeroInt());
         }
         //vet.sort(null); // FAZER SORT
         vet = sort(vet);
@@ -109,7 +114,8 @@ public class Baralho {
                 }
             }
             retorno.add(menorValor);
-            System.out.println("sort" + menorValor);
+            //breakpoint
+            //System.out.println("sort" + menorValor);
             vet.remove(menorValor);    
         }
         return retorno;
