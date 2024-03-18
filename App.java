@@ -6,14 +6,14 @@ public class App {
         Baralho baralho = new Baralho();
         baralho.embaralhamento();
         Vector<Carta> mao = new Vector<Carta>();
-        //partida(baralho, mao);
-        
+
+        /*
         //TESTE TRINCA
         Vector<Carta> trinca = new Vector<Carta>();
         trinca.add(new Carta(1,Carta.Naipe.ESPADAS));
         trinca.add(new Carta(3,Carta.Naipe.ESPADAS));
         trinca.add(new Carta(1,Carta.Naipe.COPAS));
-        trinca.add(new Carta(2,Carta.Naipe.OURO));
+        trinca.add(new Carta(4,Carta.Naipe.OURO));
         trinca.add(new Carta(1,Carta.Naipe.OURO));
         System.out.println("Three of Kind : " + baralho.combPoker(trinca).toString());
         
@@ -63,8 +63,8 @@ public class App {
         fullhouse.add(new Carta(2,Carta.Naipe.ESPADAS));
         fullhouse.add(new Carta(4,Carta.Naipe.COPAS));
         System.out.println("Fullhouse : " + baralho.combPoker(fullhouse).toString());
-
-        //partida(baralho,mao);
+        */
+        partida(baralho,mao);
 
     }
 

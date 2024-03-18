@@ -83,17 +83,17 @@ public class Baralho {
             if(as && rei && rainha && valete && dez){return ValorPoker.ROYAL_FLUSH;}
             return ValorPoker.FLUSH;
         }
-        /*
+        //
         else if(possuiQuadra(cartas)){//POSSUI QUADRA COM PROBLEMA
             return ValorPoker.FOUR_OF_KIND;
         }
         else if(possuiTrinca(cartas)){//POSSUI TRINCA COM PROBLEMA
-            if(par == 1){
+            if(par == 2){//um full house possui 2 pares, enquanto trinca possui 1 só
                 return ValorPoker.FULL_HOUSE;
             }
             return ValorPoker.THREE_OF_A_KIND;
         }
-        */
+        //
         else if(par == 2){
             return ValorPoker.TWO_PAIR;
         }
@@ -176,8 +176,7 @@ public class Baralho {
     public boolean possuiTrinca(Vector<Carta> cartas){
         Vector<Integer> vet = new Vector<Integer>();
         vet = sort(vecCartaToVecInt(cartas));
-        int i = 0;
-        while(i < vet.size()){
+        for(int i = 0; i < vet.size();i++){
             int valor = vet.get(i);
             int contaTripla = 0;
             for(int j = 0; j < vet.size();j++){
@@ -196,8 +195,7 @@ public class Baralho {
     public boolean possuiQuadra(Vector<Carta> cartas){
         Vector<Integer> vet = new Vector<Integer>();
         vet = sort(vecCartaToVecInt(cartas));
-        int i = 0;
-        while(i < vet.size()){
+        for(int i = 0; i < vet.size();i++){
             int valor = vet.get(i);
             int contaQuadra = 0;
             for(int j = 0; j < vet.size();j++){
