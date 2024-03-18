@@ -61,35 +61,53 @@ public class Baralho {
 
     public ValorPoker combPoker(Vector<Carta> cartas){
         //straigh, royal ou flush
-        if(false){
-            return ValorPoker.ROYAL_FLUSH;
-        }
-        else if(possuiFlush(cartas) && possuiSeq(cartas)){
+        boolean flush = possuiFlush(cartas);
+        boolean seq = possuiSeq(cartas);
+        int par = possuiPar(cartas);
+        if(flush && seq){
             return ValorPoker.STRAIGHT_FLUSH;
         }
-        else if(possuiFlush(cartas)){
+        else if(flush){
+            boolean as = false;
+            boolean rei = false;
+            boolean rainha = false;
+            boolean valete = false;
+            boolean dez = false;
+            for(Carta c:cartas){
+                if(c.getNumeroInt() == 1){as = true;}
+                if(c.getNumeroInt() == 13){rei = true;}
+                if(c.getNumeroInt() == 12){rainha = true;}
+                if(c.getNumeroInt() == 11){valete = true;}
+                if(c.getNumeroInt() == 10){dez = true;}
+            }
+            if(as && rei && rainha && valete && dez){return ValorPoker.ROYAL_FLUSH;}
             return ValorPoker.FLUSH;
         }
-        else if(possuiQuadra(cartas)){
-            return ValorPoker.FLUSH;
+        /*
+        else if(possuiQuadra(cartas)){//POSSUI QUADRA COM PROBLEMA
+            return ValorPoker.FOUR_OF_KIND;
         }
-        else if(possuiTrinca(cartas)){
-            return ValorPoker.FLUSH;
+        else if(possuiTrinca(cartas)){//POSSUI TRINCA COM PROBLEMA
+            if(par == 1){
+                return ValorPoker.FULL_HOUSE;
+            }
+            return ValorPoker.THREE_OF_A_KIND;
         }
-        else if(possuiPar(cartas) == 2){
+        */
+        else if(par == 2){
             return ValorPoker.TWO_PAIR;
         }
-        else if(possuiPar(cartas) == 1){
+        else if(par == 1){
             return ValorPoker.ONE_PAIR;
         }
-        else if(possuiSeq(cartas)){
+        else if(seq){
             return ValorPoker.STRAIGHT;
-        }else{
+        }
+        else{
             return ValorPoker.HIGH_CARD;
         }
-        //alterar pra straight flush, royal flush ou flush
-
     }
+
 
     public boolean possuiSeq(Vector<Carta> cartas){
         Vector<Integer> vet = new Vector<Integer>();
@@ -154,36 +172,41 @@ public class Baralho {
 
         return contaPar;
     }
-    //ARRUMAR TRINCA
+
     public boolean possuiTrinca(Vector<Carta> cartas){
         Vector<Integer> vet = new Vector<Integer>();
         vet = sort(vecCartaToVecInt(cartas));
-        boolean contaPar = false;
         int i = 0;
         while(i < vet.size()){
             int valor = vet.get(i);
-            for(int j = i+1; j < vet.size();j++){
-                if(valor == vet.get(j) && valor == vet.get(j+1)){
-                    return true;
+            int contaTripla = 0;
+            for(int j = 0; j < vet.size();j++){
+                if(valor == vet.get(j)){
+                    contaTripla++;
                 }
+            }
+            if(contaTripla == 3){
+                return true;
             }
 
         }
         return false;
     }
 
-    //ARRUMAR QUADRA
     public boolean possuiQuadra(Vector<Carta> cartas){
         Vector<Integer> vet = new Vector<Integer>();
         vet = sort(vecCartaToVecInt(cartas));
-        boolean contaPar = false;
         int i = 0;
         while(i < vet.size()){
             int valor = vet.get(i);
-            for(int j = i+1; j < vet.size();j++){
-                if(valor == vet.get(j) && valor == vet.get(j+1) && valor == vet.get(j+2)){
-                    return true;
+            int contaQuadra = 0;
+            for(int j = 0; j < vet.size();j++){
+                if(valor == vet.get(j)){
+                    contaQuadra++;
                 }
+            }
+            if(contaQuadra == 4){
+                return true;
             }
 
         }
