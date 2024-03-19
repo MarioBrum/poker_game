@@ -3,6 +3,7 @@ import java.util.Arrays;
 import java.util.Random;
 public class Baralho {
     Vector<Carta> baralho;
+    Vector<Carta> baralhoReserva;
     private Random random;
     
     public Baralho() {
@@ -16,6 +17,11 @@ public class Baralho {
             inicializacaoBaralho.add(new Carta(s,Carta.Naipe.OURO));
         }
         this.baralho = inicializacaoBaralho;
+        this.baralhoReserva = inicializacaoBaralho;
+    }
+
+    public void resetaBaralho(){
+        this.baralho = baralhoReserva;
     }
     //shuffle
     public void embaralhamento(){
@@ -28,7 +34,7 @@ public class Baralho {
 
     public void addCarta(Carta c){
         if(!baralho.contains(c)){
-            baralho.add(random.nextInt(baralho.size()-1),c);
+            baralho.add(random.nextInt(baralho.size()),c);
         }
         else{
             System.out.println("Cartas duplicadas no baralho!!!");
@@ -46,7 +52,7 @@ public class Baralho {
         }
     }
 
-    enum ValorPoker {
+    public enum ValorPoker {
         ROYAL_FLUSH,
         STRAIGHT_FLUSH, 
         FOUR_OF_KIND, 

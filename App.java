@@ -2,7 +2,7 @@ import java.util.Vector;//para os testes
 
 public class App {
      //jframe?
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
         Baralho baralho = new Baralho();
         baralho.embaralhamento();
         Vector<Carta> mao = new Vector<Carta>();
@@ -64,11 +64,19 @@ public class App {
         fullhouse.add(new Carta(4,Carta.Naipe.COPAS));
         System.out.println("Fullhouse : " + baralho.combPoker(fullhouse).toString());
         */
-        partida(baralho,mao);
-
+        while(true){
+            Baralho.ValorPoker valorJogador = partidaJogador(baralho,mao);
+            Vector<Carta> maoComputador = new Vector<Carta>();
+            Baralho.ValorPoker valorComputador = partidaComputador(baralho,maoComputador);
+            baralho.resetaBaralho();
+            mao = new Vector<Carta>();
+            maoComputador = new Vector<Carta>();
+            Thread.sleep(5000);
+        }
     }
 
-    public static void partida(Baralho baralho,Vector<Carta> mao){
+    public static Baralho.ValorPoker partidaJogador(Baralho baralho,Vector<Carta> mao){
+        System.out.println("-----------------------------------");
         System.out.println("Sua mão é: ");
         mao.add(baralho.removeCarta());
         mao.add(baralho.removeCarta());
@@ -78,7 +86,24 @@ public class App {
         for(Carta c:mao){
             System.out.print(c.toString());
         }
-        System.out.println("Sua combinação é : " + baralho.combPoker(mao).toString());
-            
+        Baralho.ValorPoker retorno = baralho.combPoker(mao);
+        System.out.println("Sua combinação é : " + retorno.toString());
+        return retorno; 
     }
+
+    public static Baralho.ValorPoker partidaComputador(Baralho baralho,Vector<Carta> mao){
+        mao.add(baralho.removeCarta());
+        mao.add(baralho.removeCarta());
+        mao.add(baralho.removeCarta());
+        mao.add(baralho.removeCarta());
+        mao.add(baralho.removeCarta());
+        System.out.println("Mão computador:");
+        for(Carta c:mao){
+            System.out.print(c.toString());
+        }
+        Baralho.ValorPoker retorno = baralho.combPoker(mao);
+        System.out.println("A combinação do computador é : " + retorno.toString());
+        return retorno; 
+    }
+
 }
