@@ -42,4 +42,8 @@ public class Carta {
     public String toString() {
         return "Carta: " + this.getNumero() + " de " + this.naipe.name() + " \n";
     }
+
+    public String nomeCarta() {
+        return this.getNumero() + "_" + this.naipe.name() + ".jpg";
+    }
 }
