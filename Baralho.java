@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 public class Baralho {
     private Vector<Carta> baralho;
+	private Vector<Carta> baralhoReserva;
 	private HashMap<ValorPoker,Integer> dicionarioCombinacoes;
 	private HashMap<Integer,Integer> dicionarioCartas;
     private Random random;
@@ -20,6 +21,7 @@ public class Baralho {
             inicializacaoBaralho.add(new Carta(s,Carta.Naipe.OURO));
         }
         this.baralho = inicializacaoBaralho;
+		this.baralhoReserva = inicializacaoBaralho;
 		
 		//inicializacao dicionarioCombinacoes
 		this.dicionarioCombinacoes = new HashMap<ValorPoker,Integer>();
@@ -56,7 +58,7 @@ public class Baralho {
     }
 
     public void resetaBaralho(){
-		baralho.clear();
+		this.baralho.clear();
 		Vector<Integer> simbolos = new Vector<Integer>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13));
 		for(Integer s : simbolos){
 			baralho.add(new Carta(s,Carta.Naipe.ESPADAS));
@@ -278,15 +280,26 @@ public class Baralho {
 	public String comparaCartas(ValorPoker jogador, ValorPoker maquina){
 		int jogadorInt = dicionarioCombinacoes.get(jogador);
 		int maquinaInt = dicionarioCombinacoes.get(maquina);
+		boolean retorno = false;
 		if(jogadorInt > maquinaInt){
-			return "Jogador ganhou!!\n";
+			retorno = true;
 		}
 		else if(jogadorInt < maquinaInt){
-			return "Você perdeu, computador ganhou!!\n"; 
+			retorno = false; 
 		}
 		//caso sejam iguais ver qual carta é maior FAZER
+		else if(jogadorInt == maquinaInt && jogador == ValorPoker.HIGH_CARD && maquina == ValorPoker.HIGH_CARD){
+			return "high card test";
+		}
 		else{
 			return "Combinacoes iguais, FUNCIONALIDADE NÃO IMPLEMENTADA\n";
+		}
+		
+		if(retorno){
+			return "Jogador ganhou!!\n";
+		}
+		else{
+			return "Voce perdeu !! Computador ganhou.";
 		}
 		
     }
