@@ -1,11 +1,14 @@
 import java.util.Vector;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.HashMap;
+
 public class Baralho {
-    Vector<Carta> baralho;
-    Vector<Carta> baralhoReserva;
+    private Vector<Carta> baralho;
+	private HashMap<ValorPoker,Integer> dicionarioCombinacoes;
+	private HashMap<Integer,Integer> dicionarioCartas;
     private Random random;
-    
+
     public Baralho() {
         Vector<Carta> inicializacaoBaralho = new Vector<Carta>();
         this.random = new Random();
@@ -17,11 +20,50 @@ public class Baralho {
             inicializacaoBaralho.add(new Carta(s,Carta.Naipe.OURO));
         }
         this.baralho = inicializacaoBaralho;
-        this.baralhoReserva = inicializacaoBaralho;
+		
+		//inicializacao dicionarioCombinacoes
+		this.dicionarioCombinacoes = new HashMap<ValorPoker,Integer>();
+		dicionarioCombinacoes.put(ValorPoker.ROYAL_FLUSH,10);
+		dicionarioCombinacoes.put(ValorPoker.STRAIGHT_FLUSH,9);
+		dicionarioCombinacoes.put(ValorPoker.FOUR_OF_KIND,8);
+		dicionarioCombinacoes.put(ValorPoker.FULL_HOUSE,7);
+		dicionarioCombinacoes.put(ValorPoker.FLUSH,6);
+		dicionarioCombinacoes.put(ValorPoker.STRAIGHT,5);
+		dicionarioCombinacoes.put(ValorPoker.THREE_OF_A_KIND,4);
+		dicionarioCombinacoes.put(ValorPoker.TWO_PAIR,3);
+		dicionarioCombinacoes.put(ValorPoker.ONE_PAIR,2);
+		dicionarioCombinacoes.put(ValorPoker.HIGH_CARD,1);
+		//this.dicionarioCombinacoes = dicionarioCombinacoes;
+		
+		//inicializacao dicionarioCartas  tem necessidade???
+		//HashMap<Integer,Integer> dicionarioCartas = new HashMap<Integer,Integer>();
+		this.dicionarioCartas = new HashMap<Integer,Integer>();
+		dicionarioCartas.put(1,13);
+		dicionarioCartas.put(13,12);
+		dicionarioCartas.put(12,11);
+		dicionarioCartas.put(11,10);
+		dicionarioCartas.put(10,9);
+		dicionarioCartas.put(9,8);
+		dicionarioCartas.put(8,7);
+		dicionarioCartas.put(7,6);
+		dicionarioCartas.put(6,5);
+		dicionarioCartas.put(5,4);
+		dicionarioCartas.put(4,3);
+		dicionarioCartas.put(3,2);
+		dicionarioCartas.put(2,1);
+		//this.dicionarioCartas = dicionarioCartas;
+		
     }
 
     public void resetaBaralho(){
-        this.baralho = baralhoReserva;
+		baralho.clear();
+		Vector<Integer> simbolos = new Vector<Integer>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13));
+		for(Integer s : simbolos){
+			baralho.add(new Carta(s,Carta.Naipe.ESPADAS));
+            baralho.add(new Carta(s,Carta.Naipe.COPAS));
+            baralho.add(new Carta(s,Carta.Naipe.BASTOS));
+            baralho.add(new Carta(s,Carta.Naipe.OURO));
+		}
     }
     //shuffle
     public void embaralhamento(){
@@ -43,7 +85,7 @@ public class Baralho {
 
     public Carta removeCarta(){
         if(!(baralho.size() <= 0)){
-            Carta c = baralho.remove(random.nextInt(baralho.size()-1));
+            Carta c = baralho.remove(random.nextInt(baralho.size()));
             return c;
         }
         else{
@@ -127,7 +169,7 @@ public class Baralho {
                 break;
             }
         }
-        
+
         return seq;
     }
 
@@ -231,6 +273,22 @@ public class Baralho {
             }
         }
         return flush;
+    }
+	
+	public String comparaCartas(ValorPoker jogador, ValorPoker maquina){
+		int jogadorInt = dicionarioCombinacoes.get(jogador);
+		int maquinaInt = dicionarioCombinacoes.get(maquina);
+		if(jogadorInt > maquinaInt){
+			return "Jogador ganhou!!\n";
+		}
+		else if(jogadorInt < maquinaInt){
+			return "Você perdeu, computador ganhou!!\n"; 
+		}
+		//caso sejam iguais ver qual carta é maior FAZER
+		else{
+			return "Combinacoes iguais, FUNCIONALIDADE NÃO IMPLEMENTADA\n";
+		}
+		
     }
 
     public String toString() {

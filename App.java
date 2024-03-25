@@ -6,7 +6,7 @@ public class App {
         Baralho baralho = new Baralho();
         baralho.embaralhamento();
         Vector<Carta> mao = new Vector<Carta>();
-
+		
         /*
         //TESTE TRINCA
         Vector<Carta> trinca = new Vector<Carta>();
@@ -16,7 +16,7 @@ public class App {
         trinca.add(new Carta(4,Carta.Naipe.OURO));
         trinca.add(new Carta(1,Carta.Naipe.OURO));
         System.out.println("Three of Kind : " + baralho.combPoker(trinca).toString());
-        
+
 
         //TESTE QUADRA
         Vector<Carta> quadra = new Vector<Carta>();
@@ -44,7 +44,7 @@ public class App {
         straightflush.add(new Carta(10,Carta.Naipe.COPAS));
         straightflush.add(new Carta(9,Carta.Naipe.COPAS));
         System.out.println("Straightflush : " + baralho.combPoker(straightflush).toString());
-        
+
 
         //TESTE FLUSH
         Vector<Carta> flush = new Vector<Carta>();
@@ -64,10 +64,12 @@ public class App {
         fullhouse.add(new Carta(4,Carta.Naipe.COPAS));
         System.out.println("Fullhouse : " + baralho.combPoker(fullhouse).toString());
         */
+		
         while(true){
             Baralho.ValorPoker valorJogador = partidaJogador(baralho,mao);
             Vector<Carta> maoComputador = new Vector<Carta>();
             Baralho.ValorPoker valorComputador = partidaComputador(baralho,maoComputador);
+			System.out.println(baralho.comparaCartas(valorJogador,valorComputador));
             baralho.resetaBaralho();
             mao = new Vector<Carta>();
             maoComputador = new Vector<Carta>();
@@ -76,6 +78,10 @@ public class App {
     }
 
     public static Baralho.ValorPoker partidaJogador(Baralho baralho,Vector<Carta> mao){
+        //clear cmd
+        //System.out.print("\033[H\033[2J");  
+        //System.out.flush();
+      
         System.out.println("-----------------------------------");
         System.out.println("Sua mão é: ");
         mao.add(baralho.removeCarta());

@@ -7,7 +7,7 @@ public class Carta {
         OURO
     }
     Naipe naipe;
-    
+
     public Carta(int nro, Naipe n) {
         numero = nro;
         naipe = n;
